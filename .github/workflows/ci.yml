@@ -43,7 +43,7 @@ jobs:
         with:
           node-version: 22
 
-      - run: npm install
+      - run: npm install --include=dev
 
       - name: Lint
         run: npm run lint
