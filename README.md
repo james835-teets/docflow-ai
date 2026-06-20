@@ -2,6 +2,13 @@
 
 Multi-tenant SaaS platform for AI-powered business document analysis. Upload contracts, invoices, and proposals — the system classifies, extracts key data, and summarizes them using Claude API.
 
+[![CI](https://github.com/Tony75546885/docflow-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/Tony75546885/docflow-ai/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+
+## Deploy
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/Tony75546885/docflow-ai)
+
 ## Architecture
 
 ```
