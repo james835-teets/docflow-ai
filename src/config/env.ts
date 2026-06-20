@@ -10,11 +10,11 @@ const envSchema = z.object({
 
   DATABASE_URL: z.string().url(),
 
-  REDIS_URL: z.string().url(),
+  REDIS_URL: z.string().default(''),
 
-  S3_ENDPOINT: z.string().url(),
-  S3_ACCESS_KEY: z.string().min(1),
-  S3_SECRET_KEY: z.string().min(1),
+  S3_ENDPOINT: z.string().default(''),
+  S3_ACCESS_KEY: z.string().default(''),
+  S3_SECRET_KEY: z.string().default(''),
   S3_BUCKET: z.string().min(1),
   S3_REGION: z.string().default('us-east-1'),
   S3_FORCE_PATH_STYLE: z
@@ -26,7 +26,7 @@ const envSchema = z.object({
   JWT_EXPIRES_IN: z.string().default('24h'),
   API_KEY_HASH_ROUNDS: z.coerce.number().default(12),
 
-  ANTHROPIC_API_KEY: z.string().startsWith('sk-ant-'),
+  ANTHROPIC_API_KEY: z.string().default(''),
   ANTHROPIC_MODEL: z.string().default('claude-sonnet-4-20250514'),
   ANTHROPIC_MAX_RETRIES: z.coerce.number().default(3),
   ANTHROPIC_TIMEOUT_MS: z.coerce.number().default(120_000),
