@@ -9,7 +9,9 @@ export default tseslint.config(
   {
     languageOptions: {
       parserOptions: {
-        projectService: true,
+        projectService: {
+          allowDefaultProject: ["tests/**/*.ts"],
+        },
         tsconfigRootDir: import.meta.dirname,
       },
     },
@@ -22,6 +24,7 @@ export default tseslint.config(
       "@typescript-eslint/no-misused-promises": "error",
       "@typescript-eslint/restrict-template-expressions": "off",
       "@typescript-eslint/no-unnecessary-condition": "warn",
+      "@typescript-eslint/require-await": "off",
     },
   },
   {
