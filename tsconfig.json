@@ -26,6 +26,6 @@
     },
     "baseUrl": "src"
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules", "dist", "tests"]
+  "include": ["src/**/*.ts", "tests/**/*.ts"],
+  "exclude": ["node_modules", "dist"]
 }
