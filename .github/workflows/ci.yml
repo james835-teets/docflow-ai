@@ -1,0 +1,90 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  quality:
+    name: Lint, Typecheck & Test
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: docflow
+          POSTGRES_PASSWORD: docflow_ci
+          POSTGRES_DB: docflow_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U docflow"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Format check
+        run: npm run format:check
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Generate Prisma client
+        run: npx prisma generate
+
+      - name: Run migrations
+        run: npx prisma migrate deploy
+        env:
+          DATABASE_URL: postgresql://docflow:docflow_ci@localhost:5432/docflow_test?schema=public
+
+      - name: Unit tests
+        run: npm run test -- --reporter=verbose
+
+      - name: Integration tests
+        run: npm run test:integration -- --reporter=verbose
+        env:
+          DATABASE_URL: postgresql://docflow:docflow_ci@localhost:5432/docflow_test?schema=public
+          REDIS_URL: redis://localhost:6379
+          JWT_SECRET: ci-test-secret-that-is-long-enough-for-validation
+          WEBHOOK_SIGNING_SECRET: ci-test-webhook-secret
+          ANTHROPIC_API_KEY: sk-ant-test-key-for-ci
+          S3_ENDPOINT: http://localhost:9000
+          S3_ACCESS_KEY: minioadmin
+          S3_SECRET_KEY: minioadmin
+          S3_BUCKET: test-bucket
+
+  build:
+    name: Docker Build
+    runs-on: ubuntu-latest
+    needs: quality
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build Docker image
+        run: docker build -f docker/Dockerfile -t docflow-ai:ci .

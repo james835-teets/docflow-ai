@@ -1,0 +1,28 @@
+node_modules/
+dist/
+.env
+*.log
+coverage/
+bun.lock
+
+# Prisma
+prisma/*.db
+
+# Frontend build
+frontend/dist/
+frontend/node_modules/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+.DS_Store
+
+# Docker volumes
+postgres_data/
+redis_data/
+minio_data/
+
+# claude-flow
+.claude-flow/
