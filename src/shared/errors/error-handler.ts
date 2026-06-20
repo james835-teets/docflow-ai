@@ -32,10 +32,7 @@ export function createErrorHandler(logger: FastifyBaseLogger) {
     const correlationId = request.headers['x-correlation-id'] ?? request.id;
 
     if (isAppError(error)) {
-      logger.warn(
-        { err: error, correlationId, statusCode: error.statusCode },
-        error.message,
-      );
+      logger.warn({ err: error, correlationId, statusCode: error.statusCode }, error.message);
       const body: ErrorResponse = {
         success: false,
         error: {
