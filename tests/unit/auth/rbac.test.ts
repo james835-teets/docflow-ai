@@ -1,6 +1,5 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { requireRole, requireMinRole } from '../../../src/shared/middleware/rbac.js';
-import { AppError } from '../../../src/shared/errors/app-error.js';
 
 function mockRequest(role?: string) {
   return {
