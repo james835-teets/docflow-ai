@@ -18,8 +18,12 @@ export class DocumentService {
     this.processingService = processingService;
   }
 
-  async upload(tenantId: string, file: { filename: string; mimetype: string; data: Buffer }, uploadedBy?: string) {
-    if (!ALLOWED_MIME_TYPES.includes(file.mimetype as typeof ALLOWED_MIME_TYPES[number])) {
+  async upload(
+    tenantId: string,
+    file: { filename: string; mimetype: string; data: Buffer },
+    uploadedBy?: string,
+  ) {
+    if (!ALLOWED_MIME_TYPES.includes(file.mimetype as (typeof ALLOWED_MIME_TYPES)[number])) {
       throw AppError.badRequest(`Unsupported file type: ${file.mimetype}`);
     }
 

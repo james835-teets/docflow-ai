@@ -41,7 +41,12 @@ export interface Container {
   auditService: AuditService;
 }
 
-export function createContainer(env: Env, db: PrismaClient, redis?: IORedis, logger?: FastifyBaseLogger): Container {
+export function createContainer(
+  env: Env,
+  db: PrismaClient,
+  redis?: IORedis,
+  logger?: FastifyBaseLogger,
+): Container {
   const passwordService = new PasswordService(env.API_KEY_HASH_ROUNDS);
   const jwtService = new JwtService(env.JWT_SECRET, env.JWT_EXPIRES_IN);
   const apiKeyService = new ApiKeyService(db, passwordService);

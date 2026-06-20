@@ -14,7 +14,11 @@ export class UserService {
     return this.repo.findMany(tenantId, page, limit);
   }
 
-  async update(id: string, tenantId: string, data: { name?: string; role?: 'ADMIN' | 'MEMBER' | 'VIEWER'; isActive?: boolean }) {
+  async update(
+    id: string,
+    tenantId: string,
+    data: { name?: string; role?: 'ADMIN' | 'MEMBER' | 'VIEWER'; isActive?: boolean },
+  ) {
     await this.getById(id, tenantId);
     return this.repo.update(id, tenantId, data);
   }

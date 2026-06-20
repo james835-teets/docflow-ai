@@ -14,16 +14,10 @@ export function registerAuthRoutes(app: FastifyInstance, deps: AuthRouteDeps) {
   app.post('/auth/register', (req, reply) => authController.register(req, reply));
   app.post('/auth/login', (req, reply) => authController.login(req, reply));
 
-  app.get(
-    '/auth/me',
-    { preHandler: [jwtAuthHook] },
-    (req, reply) => authController.me(req, reply),
-  );
+  app.get('/auth/me', { preHandler: [jwtAuthHook] }, (req, reply) => authController.me(req, reply));
 
-  app.post(
-    '/auth/api-keys',
-    { preHandler: [jwtAuthHook, requireRole('ADMIN')] },
-    (req, reply) => authController.createApiKey(req, reply),
+  app.post('/auth/api-keys', { preHandler: [jwtAuthHook, requireRole('ADMIN')] }, (req, reply) =>
+    authController.createApiKey(req, reply),
   );
 
   app.get(

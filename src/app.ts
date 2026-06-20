@@ -63,7 +63,10 @@ export function buildApp(env: Env, db: PrismaClient, redis?: IORedis) {
   registerAuthRoutes(app, { authController: container.authController, jwtAuthHook });
   registerTenantRoutes(app, { tenantController: container.tenantController, jwtAuthHook });
   registerUserRoutes(app, { userController: container.userController, jwtAuthHook });
-  registerDocumentRoutes(app, { documentController: container.documentController, combinedAuthHook });
+  registerDocumentRoutes(app, {
+    documentController: container.documentController,
+    combinedAuthHook,
+  });
   registerWebhookRoutes(app, { webhookController: container.webhookController, jwtAuthHook });
   registerAuditRoutes(app, { auditService: container.auditService, jwtAuthHook });
 

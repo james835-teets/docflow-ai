@@ -36,9 +36,7 @@ export function requireMinRole(minRole: Role) {
     const requiredLevel = ROLE_HIERARCHY[minRole];
 
     if (userLevel < requiredLevel) {
-      throw AppError.forbidden(
-        `Insufficient permissions. Minimum role required: ${minRole}`,
-      );
+      throw AppError.forbidden(`Insufficient permissions. Minimum role required: ${minRole}`);
     }
   };
 }

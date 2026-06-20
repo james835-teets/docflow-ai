@@ -34,10 +34,7 @@ describe('JwtService', () => {
   });
 
   it('throws on expired token', () => {
-    const shortLivedService = new JwtService(
-      'test-secret-that-is-long-enough-32chars!',
-      '0s',
-    );
+    const shortLivedService = new JwtService('test-secret-that-is-long-enough-32chars!', '0s');
     const token = shortLivedService.sign(payload);
     expect(() => service.verify(token)).toThrow();
   });

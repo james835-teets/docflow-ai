@@ -2,7 +2,11 @@ import { z } from 'zod';
 
 export const createTenantSchema = z.object({
   name: z.string().min(1).max(255),
-  slug: z.string().min(1).max(63).regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens'),
+  slug: z
+    .string()
+    .min(1)
+    .max(63)
+    .regex(/^[a-z0-9-]+$/, 'Slug must be lowercase alphanumeric with hyphens'),
   plan: z.enum(['FREE', 'STARTER', 'BUSINESS', 'ENTERPRISE']).optional(),
 });
 

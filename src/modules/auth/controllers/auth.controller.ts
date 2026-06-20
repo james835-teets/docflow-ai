@@ -34,11 +34,7 @@ export class AuthController {
     if (!user) throw AppError.unauthorized();
 
     const input = createApiKeySchema.parse(request.body);
-    const apiKey = await this.apiKeyService.create(
-      user.tenantId,
-      input.name,
-      input.permissions,
-    );
+    const apiKey = await this.apiKeyService.create(user.tenantId, input.name, input.permissions);
     return reply.status(201).send(ok(apiKey));
   }
 

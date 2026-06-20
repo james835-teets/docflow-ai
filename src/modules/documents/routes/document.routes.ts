@@ -16,21 +16,15 @@ export function registerDocumentRoutes(app: FastifyInstance, deps: DocumentRoute
     (req, reply) => documentController.upload(req, reply),
   );
 
-  app.get(
-    '/documents',
-    { preHandler: [combinedAuthHook] },
-    (req, reply) => documentController.list(req, reply),
+  app.get('/documents', { preHandler: [combinedAuthHook] }, (req, reply) =>
+    documentController.list(req, reply),
   );
 
-  app.get(
-    '/documents/:id',
-    { preHandler: [combinedAuthHook] },
-    (req, reply) => documentController.getById(req, reply),
+  app.get('/documents/:id', { preHandler: [combinedAuthHook] }, (req, reply) =>
+    documentController.getById(req, reply),
   );
 
-  app.get(
-    '/documents/:id/download',
-    { preHandler: [combinedAuthHook] },
-    (req, reply) => documentController.getDownloadUrl(req, reply),
+  app.get('/documents/:id/download', { preHandler: [combinedAuthHook] }, (req, reply) =>
+    documentController.getDownloadUrl(req, reply),
   );
 }

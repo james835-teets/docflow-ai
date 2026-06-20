@@ -28,7 +28,12 @@ export class ClaudeService {
   private readonly maxRetries: number;
   private readonly timeout: number;
 
-  constructor(env: Pick<Env, 'ANTHROPIC_API_KEY' | 'ANTHROPIC_MODEL' | 'ANTHROPIC_MAX_RETRIES' | 'ANTHROPIC_TIMEOUT_MS'>) {
+  constructor(
+    env: Pick<
+      Env,
+      'ANTHROPIC_API_KEY' | 'ANTHROPIC_MODEL' | 'ANTHROPIC_MAX_RETRIES' | 'ANTHROPIC_TIMEOUT_MS'
+    >,
+  ) {
     this.apiKey = env.ANTHROPIC_API_KEY;
     this.model = env.ANTHROPIC_MODEL;
     this.maxRetries = env.ANTHROPIC_MAX_RETRIES;
@@ -74,7 +79,7 @@ export class ClaudeService {
           throw new Error(`Claude API ${response.status}: ${errorBody}`);
         }
 
-        const result = await response.json() as {
+        const result = (await response.json()) as {
           content: Array<{ type: string; text: string }>;
           usage: { input_tokens: number; output_tokens: number };
         };
@@ -114,7 +119,7 @@ export class ClaudeService {
   private normalizeDocType(type: string): ExtractionResult['documentType'] {
     const upper = type.toUpperCase();
     const valid = ['CONTRACT', 'INVOICE', 'PROPOSAL', 'REPORT', 'OTHER'] as const;
-    return valid.includes(upper as typeof valid[number])
+    return valid.includes(upper as (typeof valid)[number])
       ? (upper as ExtractionResult['documentType'])
       : 'OTHER';
   }

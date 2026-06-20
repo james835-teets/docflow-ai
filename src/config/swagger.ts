@@ -8,13 +8,12 @@ export async function registerSwagger(app: FastifyInstance) {
       openapi: '3.0.3',
       info: {
         title: 'DocFlow AI API',
-        description: 'Enterprise Document Intelligence Platform — Multi-tenant SaaS for AI-powered document analysis',
+        description:
+          'Enterprise Document Intelligence Platform — Multi-tenant SaaS for AI-powered document analysis',
         version: '0.1.0',
         contact: { name: 'DocFlow AI', email: 'support@docflow.ai' },
       },
-      servers: [
-        { url: 'http://localhost:3000', description: 'Development' },
-      ],
+      servers: [{ url: 'http://localhost:3000', description: 'Development' }],
       components: {
         securitySchemes: {
           BearerAuth: {

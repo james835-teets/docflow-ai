@@ -10,10 +10,8 @@ interface WebhookRouteDeps {
 export function registerWebhookRoutes(app: FastifyInstance, deps: WebhookRouteDeps) {
   const { webhookController, jwtAuthHook } = deps;
 
-  app.post(
-    '/webhooks',
-    { preHandler: [jwtAuthHook, requireRole('ADMIN')] },
-    (req, reply) => webhookController.create(req, reply),
+  app.post('/webhooks', { preHandler: [jwtAuthHook, requireRole('ADMIN')] }, (req, reply) =>
+    webhookController.create(req, reply),
   );
 
   app.get(
@@ -22,15 +20,11 @@ export function registerWebhookRoutes(app: FastifyInstance, deps: WebhookRouteDe
     (req, reply) => webhookController.list(req, reply),
   );
 
-  app.patch(
-    '/webhooks/:id',
-    { preHandler: [jwtAuthHook, requireRole('ADMIN')] },
-    (req, reply) => webhookController.update(req, reply),
+  app.patch('/webhooks/:id', { preHandler: [jwtAuthHook, requireRole('ADMIN')] }, (req, reply) =>
+    webhookController.update(req, reply),
   );
 
-  app.delete(
-    '/webhooks/:id',
-    { preHandler: [jwtAuthHook, requireRole('ADMIN')] },
-    (req, reply) => webhookController.delete(req, reply),
+  app.delete('/webhooks/:id', { preHandler: [jwtAuthHook, requireRole('ADMIN')] }, (req, reply) =>
+    webhookController.delete(req, reply),
   );
 }

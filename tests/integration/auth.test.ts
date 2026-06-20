@@ -105,7 +105,12 @@ describe('POST /auth/register', () => {
     const r2 = await app.inject({
       method: 'POST',
       url: '/auth/register',
-      payload: { tenantId: tenant2.id, email: 'shared@test.com', password: 'password-123', name: 'User 2' },
+      payload: {
+        tenantId: tenant2.id,
+        email: 'shared@test.com',
+        password: 'password-123',
+        name: 'User 2',
+      },
     });
 
     expect(r1.statusCode).toBe(201);
@@ -206,7 +211,13 @@ describe('API Keys (RBAC)', () => {
     const admin = await app.inject({
       method: 'POST',
       url: '/auth/register',
-      payload: { tenantId, email: `rbac-admin-${suffix}@test.com`, password: 'password-123', name: 'Admin', role: 'ADMIN' },
+      payload: {
+        tenantId,
+        email: `rbac-admin-${suffix}@test.com`,
+        password: 'password-123',
+        name: 'Admin',
+        role: 'ADMIN',
+      },
     });
     expect(admin.statusCode).toBe(201);
     adminToken = admin.json().data.token;
@@ -214,7 +225,12 @@ describe('API Keys (RBAC)', () => {
     const member = await app.inject({
       method: 'POST',
       url: '/auth/register',
-      payload: { tenantId, email: `rbac-member-${suffix}@test.com`, password: 'password-123', name: 'Member' },
+      payload: {
+        tenantId,
+        email: `rbac-member-${suffix}@test.com`,
+        password: 'password-123',
+        name: 'Member',
+      },
     });
     expect(member.statusCode).toBe(201);
     memberToken = member.json().data.token;
@@ -222,7 +238,13 @@ describe('API Keys (RBAC)', () => {
     const viewer = await app.inject({
       method: 'POST',
       url: '/auth/register',
-      payload: { tenantId, email: `rbac-viewer-${suffix}@test.com`, password: 'password-123', name: 'Viewer', role: 'VIEWER' },
+      payload: {
+        tenantId,
+        email: `rbac-viewer-${suffix}@test.com`,
+        password: 'password-123',
+        name: 'Viewer',
+        role: 'VIEWER',
+      },
     });
     expect(viewer.statusCode).toBe(201);
     viewerToken = viewer.json().data.token;

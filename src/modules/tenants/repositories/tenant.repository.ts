@@ -27,7 +27,10 @@ export class TenantRepository {
     return this.db.tenant.create({ data });
   }
 
-  async update(id: string, data: Partial<Pick<Tenant, 'name' | 'plan' | 'isActive'>>): Promise<Tenant> {
+  async update(
+    id: string,
+    data: Partial<Pick<Tenant, 'name' | 'plan' | 'isActive'>>,
+  ): Promise<Tenant> {
     return this.db.tenant.update({ where: { id }, data });
   }
 }

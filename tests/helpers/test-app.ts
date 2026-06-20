@@ -6,7 +6,9 @@ const TEST_ENV = {
   PORT: 0,
   HOST: '127.0.0.1',
   LOG_LEVEL: 'fatal' as const,
-  DATABASE_URL: process.env['DATABASE_URL'] ?? 'postgresql://docflow:docflow_dev@localhost:5433/docflow?schema=public',
+  DATABASE_URL:
+    process.env['DATABASE_URL'] ??
+    'postgresql://docflow:docflow_dev@localhost:5433/docflow?schema=public',
   REDIS_URL: process.env['REDIS_URL'] ?? 'redis://localhost:6379',
   S3_ENDPOINT: 'http://localhost:9000',
   S3_ACCESS_KEY: 'minioadmin',

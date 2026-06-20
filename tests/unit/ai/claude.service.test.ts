@@ -63,7 +63,12 @@ describe('ClaudeService', () => {
 
   it('normalizes unknown document type to OTHER', async () => {
     globalThis.fetch = mockFetchResponse({
-      content: [{ type: 'text', text: '{"summary":"x","documentType":"MEMO","entities":{},"metadata":{},"confidence":0.5}' }],
+      content: [
+        {
+          type: 'text',
+          text: '{"summary":"x","documentType":"MEMO","entities":{},"metadata":{},"confidence":0.5}',
+        },
+      ],
       usage: { input_tokens: 100, output_tokens: 50 },
     });
 
@@ -73,7 +78,12 @@ describe('ClaudeService', () => {
 
   it('clamps confidence to [0, 1]', async () => {
     globalThis.fetch = mockFetchResponse({
-      content: [{ type: 'text', text: '{"summary":"x","documentType":"INVOICE","entities":{},"metadata":{},"confidence":1.5}' }],
+      content: [
+        {
+          type: 'text',
+          text: '{"summary":"x","documentType":"INVOICE","entities":{},"metadata":{},"confidence":1.5}',
+        },
+      ],
       usage: { input_tokens: 100, output_tokens: 50 },
     });
 
@@ -82,14 +92,26 @@ describe('ClaudeService', () => {
   });
 
   it('retries on 429 rate limit', async () => {
-    const rateLimitedFetch = vi.fn()
-      .mockResolvedValueOnce({ ok: false, status: 429, text: () => Promise.resolve('rate limited') })
+    const rateLimitedFetch = vi
+      .fn()
       .mockResolvedValueOnce({
-        ok: true, status: 200,
-        json: () => Promise.resolve({
-          content: [{ type: 'text', text: '{"summary":"ok","documentType":"REPORT","entities":{},"metadata":{},"confidence":0.8}' }],
-          usage: { input_tokens: 100, output_tokens: 50 },
-        }),
+        ok: false,
+        status: 429,
+        text: () => Promise.resolve('rate limited'),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: () =>
+          Promise.resolve({
+            content: [
+              {
+                type: 'text',
+                text: '{"summary":"ok","documentType":"REPORT","entities":{},"metadata":{},"confidence":0.8}',
+              },
+            ],
+            usage: { input_tokens: 100, output_tokens: 50 },
+          }),
       });
     globalThis.fetch = rateLimitedFetch;
 
@@ -99,14 +121,26 @@ describe('ClaudeService', () => {
   });
 
   it('retries on 500 server error', async () => {
-    const serverErrorFetch = vi.fn()
-      .mockResolvedValueOnce({ ok: false, status: 500, text: () => Promise.resolve('server error') })
+    const serverErrorFetch = vi
+      .fn()
       .mockResolvedValueOnce({
-        ok: true, status: 200,
-        json: () => Promise.resolve({
-          content: [{ type: 'text', text: '{"summary":"ok","documentType":"INVOICE","entities":{},"metadata":{},"confidence":0.9}' }],
-          usage: { input_tokens: 100, output_tokens: 50 },
-        }),
+        ok: false,
+        status: 500,
+        text: () => Promise.resolve('server error'),
+      })
+      .mockResolvedValueOnce({
+        ok: true,
+        status: 200,
+        json: () =>
+          Promise.resolve({
+            content: [
+              {
+                type: 'text',
+                text: '{"summary":"ok","documentType":"INVOICE","entities":{},"metadata":{},"confidence":0.9}',
+              },
+            ],
+            usage: { input_tokens: 100, output_tokens: 50 },
+          }),
       });
     globalThis.fetch = serverErrorFetch;
 
@@ -123,7 +157,9 @@ describe('ClaudeService', () => {
 
   it('throws after exhausting retries', async () => {
     globalThis.fetch = vi.fn().mockResolvedValue({
-      ok: false, status: 500, text: () => Promise.resolve('server down'),
+      ok: false,
+      status: 500,
+      text: () => Promise.resolve('server down'),
     });
 
     await expect(service.extractDocumentData('text')).rejects.toThrow();
@@ -141,7 +177,12 @@ describe('ClaudeService', () => {
 
   it('truncates input to 100k characters', async () => {
     globalThis.fetch = mockFetchResponse({
-      content: [{ type: 'text', text: '{"summary":"ok","documentType":"OTHER","entities":{},"metadata":{},"confidence":0.5}' }],
+      content: [
+        {
+          type: 'text',
+          text: '{"summary":"ok","documentType":"OTHER","entities":{},"metadata":{},"confidence":0.5}',
+        },
+      ],
       usage: { input_tokens: 50000, output_tokens: 100 },
     });
 

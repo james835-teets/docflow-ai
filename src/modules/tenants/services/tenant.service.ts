@@ -14,13 +14,24 @@ export class TenantService {
     return this.repo.findMany(page, limit);
   }
 
-  async create(data: { name: string; slug: string; plan?: 'FREE' | 'STARTER' | 'BUSINESS' | 'ENTERPRISE' }) {
+  async create(data: {
+    name: string;
+    slug: string;
+    plan?: 'FREE' | 'STARTER' | 'BUSINESS' | 'ENTERPRISE';
+  }) {
     const existing = await this.repo.findBySlug(data.slug);
     if (existing) throw AppError.conflict('Tenant with this slug already exists');
     return this.repo.create(data);
   }
 
-  async update(id: string, data: { name?: string; plan?: 'FREE' | 'STARTER' | 'BUSINESS' | 'ENTERPRISE'; isActive?: boolean }) {
+  async update(
+    id: string,
+    data: {
+      name?: string;
+      plan?: 'FREE' | 'STARTER' | 'BUSINESS' | 'ENTERPRISE';
+      isActive?: boolean;
+    },
+  ) {
     await this.getById(id);
     return this.repo.update(id, data);
   }

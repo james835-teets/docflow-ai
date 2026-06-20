@@ -36,7 +36,11 @@ export class UserRepository {
     return { data, total };
   }
 
-  async update(id: string, tenantId: string, data: { name?: string; role?: 'ADMIN' | 'MEMBER' | 'VIEWER'; isActive?: boolean }) {
+  async update(
+    id: string,
+    tenantId: string,
+    data: { name?: string; role?: 'ADMIN' | 'MEMBER' | 'VIEWER'; isActive?: boolean },
+  ) {
     return this.db.user.update({
       where: { id, tenantId },
       select: USER_SELECT,

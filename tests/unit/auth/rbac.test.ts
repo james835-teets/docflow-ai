@@ -3,7 +3,9 @@ import { requireRole, requireMinRole } from '../../../src/shared/middleware/rbac
 
 function mockRequest(role?: string) {
   return {
-    currentUser: role ? { id: '1', tenantId: 't1', role, email: 'a@b.com', authMethod: 'jwt' as const } : undefined,
+    currentUser: role
+      ? { id: '1', tenantId: 't1', role, email: 'a@b.com', authMethod: 'jwt' as const }
+      : undefined,
   } as any;
 }
 
