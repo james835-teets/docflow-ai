@@ -48,6 +48,15 @@ export function buildApp(env: Env, db: PrismaClient, redis?: IORedis) {
   app.addHook('onRequest', correlationIdHook);
   app.setErrorHandler(createErrorHandler(app.log) as Parameters<typeof app.setErrorHandler>[0]);
 
+  app.get('/', async (_request, reply) => {
+    return reply.send(ok({
+      name: 'DocFlow AI',
+      version: process.env['npm_package_version'] ?? '0.1.0',
+      docs: '/docs',
+      health: '/health',
+    }));
+  });
+
   app.get('/health', async (_request, reply) => {
     const response = ok({
       status: 'healthy',
