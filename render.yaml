@@ -56,13 +56,14 @@ services:
       - key: S3_FORCE_PATH_STYLE
         value: false
 
+  - type: redis
+    name: docflow-redis
+    plan: free
+    maxmemoryPolicy: allkeys-lru
+    ipAllowList: []
+
 databases:
   - name: docflow-db
     plan: free
     databaseName: docflow
     user: docflow
-
-redis:
-  - name: docflow-redis
-    plan: free
-    maxmemoryPolicy: allkeys-lru
