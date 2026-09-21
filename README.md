@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # DocFlow AI — Enterprise Document Intelligence Platform
 
 Multi-tenant SaaS platform for AI-powered business document analysis. Upload contracts, invoices, and proposals — the system classifies, extracts key data, and summarizes them using Claude API.
@@ -123,3 +124,6 @@ Every database query is scoped to `tenant_id`. Middleware enforces tenant isolat
 ## RBAC
 
 Three roles per tenant: **Admin** (full access, manage keys/webhooks), **Member** (upload, view), **Viewer** (read-only).
+=======
+# docflow-ai
+>>>>>>> origin/main
